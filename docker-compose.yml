@@ -1,0 +1,23 @@
+version: '2'
+services:
+  confluence:
+    image: q2digger/jira:7.10.1
+    container_name: jira
+    hostname: jira
+    volumes:
+      - app_data:/var/atlassian/jira
+      - app_logs:/opt/atlassina/jira/logs
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      JVM_MINIMUM_MEMORY: '2048m'
+      JVM_MAXIMUM_MEMORY: '4096m'
+      CATALINA_CONNECTOR_PROXYNAME: '192.168.109.13'
+      CATALINA_CONNECTOR_PROXYPORT: '80'
+      CATALINA_CONNECTOR_SCHEME: 'http'
+
+volumes:
+  app_logs:
+  app_data:
+
