@@ -1,12 +1,14 @@
 import ConfigParser
 import os
+import sys, traceback
 
 def workConfig(path,dbconfig):
   """
   Read from config file
   """
   if not os.path.exists(path):
-    print "errrorrrrr\n"
+    print "jira.config not found. exit\n"
+    sys.exit(0)
 
   config = ConfigParser.RawConfigParser(allow_no_value=True)
   config.read(path)
