@@ -24,9 +24,13 @@ export JVM_MINIMUM_MEMORY
 export JVM_MAXIMUM_MEMORY
 
 if [ -f "/opt/atlassian/jira/conf/jira.config" ] && [ ! -f "/var/atlassian/jira/dbconfig.xml" ]; then
+  echo "====================="
   echo "Generate dbconfig.xml"
   cd /
   /usr/bin/python dbconfgenerator.py
+fi
+
+if [ -d "/ssl/root" ]; then
   /sslinstall.sh
 fi
 

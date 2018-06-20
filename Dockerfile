@@ -1,4 +1,4 @@
-FROM sgrio/java-oracle:jdk_8
+FROM sgrio/java-oracle:server_jre_8
 
 MAINTAINER Dmitry Gerasimov <q2digger@gmail.com>
 
@@ -54,9 +54,9 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL_DIR}/work" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL_DIR}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL_DIR}/conf/server.xml" \
-    && mkdir -p /ssl/root
+    && mkdir -p                 /ssl
 
-COPY ./certs/ /ssl/root/
+# COPY ./certs/ /ssl/root/
 COPY ./ssl/   /ssl/
 
 RUN set -x \   
