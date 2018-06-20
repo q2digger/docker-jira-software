@@ -7,11 +7,17 @@ database type:
   - oracle
 
 all fields are mandatory!! 
+  - type
+  - host
+  - port
+  - user 
+  - password
+  - database
+  - schema (only for postgresql, usually "public")
 
 Simple line to start: 
 
 docker run -d -p 8080:8080 --rm --name jira q2digger/jira:latest
-
 
 Line to start with ENV VARIABLES: 
 

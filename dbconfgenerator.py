@@ -33,7 +33,7 @@ def workConfig(path,dbconfig):
     dbconfig.write("<url>jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbname + "?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB</url>\n")
     dbconfig.write("<driver-class>com.mysql.jdbc.Driver</driver-class>\n<validation-query>select 1</validation-query>\n<validation-query-timeout>3</validation-query-timeout>\n")
   elif dbtype == "postgresql":
-    dbconfig.write("<database-type>postgres72</database-type>\n<jdbc-datasource>\n")
+    dbconfig.write("<database-type>postgres72</database-type>\n<schema-name>" + dbschema + "</schema-name>\n<jdbc-datasource>\n")
     dbconfig.write("<url>jdbc:postgresql://" + dbhost + ":" + dbport + "/" + dbname + "</url>\n")
     dbconfig.write("<driver-class>org.postgresql.Driver</driver-class>\n<validation-query>select version();</validation-query>\n<pool-test-on-borrow>false</pool-test-on-borrow>\n")
   elif dbtype == "mssql":

@@ -56,7 +56,6 @@ RUN set -x \
     && touch -d "@0"           "${JIRA_INSTALL_DIR}/conf/server.xml" \
     && mkdir -p                 /ssl
 
-# COPY ./certs/ /ssl/root/
 COPY ./ssl/   /ssl/
 
 RUN set -x \   

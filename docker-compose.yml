@@ -9,6 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./certs/:/etc/nginx/certs:ro
+      - ./jira-nginx.conf:/etc/nginx/vhost.d/jira.local.net
     networks:
       - proxy
   jiradb:
