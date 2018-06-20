@@ -1,23 +1,51 @@
 version: '2'
+
 services:
-  confluence:
-    image: q2digger/jira:7.10.1
-    container_name: jira
-    hostname: jira
-    volumes:
-      - app_data:/var/atlassian/jira
-      - app_logs:/opt/atlassina/jira/logs
-    restart: always
+  proxy:
+    image: jwilder/nginx-proxy
     ports:
-      - 8080:8080
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./certs/:/etc/nginx/certs:ro
+    networks:
+      - proxy
+  jiradb:
+    image: atlassian/postgres:9.4
+    volumes:
+      - jiradb:/var/lib/postgresql/data
+    environment:
+      - DB_PASS=atlassian
+      - DB_NAME=jira
+      - DB_USER=atlassian
+    networks:
+      - jira
+  jira:
+    image: q2digger/jira:latest
+    ports: 
+      - 0.0.0.0:8080:8080
+    volumes:
+      - jiradata:/var/atlassian/jira
+      - jiralogs:/opt/atlassian/jira/logs
+      - ./jira.config:/opt/atlassian/jira/conf/jira.config
+    networks:
+      - jira
+      - proxy
     environment:
       JVM_MINIMUM_MEMORY: '2048m'
       JVM_MAXIMUM_MEMORY: '4096m'
-      CATALINA_CONNECTOR_PROXYNAME: '192.168.109.13'
-      CATALINA_CONNECTOR_PROXYPORT: '80'
-      CATALINA_CONNECTOR_SCHEME: 'http'
+      CATALINA_CONNECTOR_PROXYNAME: 'jira.local.net'
+      CATALINA_CONNECTOR_PROXYPORT: '443'
+      CATALINA_CONNECTOR_SCHEME: 'https'
+      VIRTUAL_HOST: 'jira.local.net'
+      VIRTUAL_PORT: '8080'
 
 volumes:
-  app_logs:
-  app_data:
+  jiradb:
+  jiradata:
+  jiralogs:
 
+networks:
+  jira:
+  proxy:

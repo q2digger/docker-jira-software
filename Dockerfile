@@ -1,5 +1,7 @@
 FROM sgrio/java-oracle:jdk_8
 
+MAINTAINER Dmitry Gerasimov <q2digger@gmail.com>
+
 ARG JIRA_VERSION=7.10.1
 
 ENV RUN_USER    daemon
@@ -24,12 +26,13 @@ CMD ["/entrypoint.sh", "-fg"]
 
 RUN apt-get update --quiet \
     && update-ca-certificates \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet ttf-dejavu curl \
+    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet ttf-dejavu curl python python-configparser \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
 COPY entrypoint.sh  /entrypoint.sh
 
-# COPY . ./tmp
+COPY dbconfgenerator.py /dbconfgenerator.py
+COPY ./ssl/sslinstall.sh /sslinstall.sh
 
 RUN set -x \
     && mkdir -p                "${JIRA_HOME}" \
@@ -50,7 +53,11 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL_DIR}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL_DIR}/work" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL_DIR}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
-    && touch -d "@0"           "${JIRA_INSTALL_DIR}/conf/server.xml"
+    && touch -d "@0"           "${JIRA_INSTALL_DIR}/conf/server.xml" \
+    && mkdir -p /ssl/root
+
+COPY ./certs/ /ssl/root/
+COPY ./ssl/   /ssl/
 
 RUN set -x \   
     && sed -i -e 's/^JVM_MINIMUM_MEMORY.*//g' ${JIRA_INSTALL_DIR}/bin/setenv.sh \

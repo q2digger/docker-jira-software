@@ -23,6 +23,12 @@ export CATALINA_OPTS
 export JVM_MINIMUM_MEMORY
 export JVM_MAXIMUM_MEMORY
 
+if [ -f "/opt/atlassian/jira/conf/jira.config" ] || [ ! -f "/var/atlassian/jira/dbconfig.xml" ]; then
+  echo "Generate dbconfig.xml"
+  cd /
+  /usr/bin/python dbconfgenerator.py
+  /sslinstall.sh
+fi
 
 # Start Jira as the correct user
 if [ "${UID}" -eq 0 ]; then
