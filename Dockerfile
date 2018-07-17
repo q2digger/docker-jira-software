@@ -2,7 +2,7 @@ FROM sgrio/java-oracle:server_jre_8
 
 MAINTAINER Dmitry Gerasimov <q2digger@gmail.com>
 
-ARG JIRA_VERSION=7.10.1
+ARG JIRA_VERSION=7.11.0
 
 ENV RUN_USER    daemon
 ENV RUN_GROUP   daemon
