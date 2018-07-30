@@ -13,13 +13,13 @@ services:
     networks:
       - proxy
   jiradb:
-    image: atlassian/postgres:9.4
+    image: postgres:9.4
     volumes:
       - _jiradb:/var/lib/postgresql/data
     environment:
-      - DB_PASS=atlassian
-      - DB_NAME=jira
-      - DB_USER=atlassian
+      - POSTGRES_PASSWORD=atlassian
+      - POSTGRES_DB=jira
+      - POSTGRES_USER=atlassian
     networks:
       - jira
   jira:

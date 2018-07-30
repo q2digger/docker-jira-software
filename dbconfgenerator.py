@@ -33,6 +33,7 @@ def workConfig(path,dbconfig):
     dbconfig.write("<url>jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbname + "?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB</url>\n")
     dbconfig.write("<driver-class>com.mysql.jdbc.Driver</driver-class>\n<validation-query>select 1</validation-query>\n<validation-query-timeout>3</validation-query-timeout>\n")
   elif dbtype == "postgresql":
+    dbschema = config.get("database","schema")
     dbconfig.write("<database-type>postgres72</database-type>\n<schema-name>" + dbschema + "</schema-name>\n<jdbc-datasource>\n")
     dbconfig.write("<url>jdbc:postgresql://" + dbhost + ":" + dbport + "/" + dbname + "</url>\n")
     dbconfig.write("<driver-class>org.postgresql.Driver</driver-class>\n<validation-query>select version();</validation-query>\n<pool-test-on-borrow>false</pool-test-on-borrow>\n")
@@ -47,12 +48,15 @@ def workConfig(path,dbconfig):
 
   dbconfig.write("<username>" + dbuser + "</username>\n")
   dbconfig.write("<password>" + dbpass + "</password>\n")
-  dbconfig.write("<pool-size>30</pool-size>\n")
+  dbconfig.write("<pool-size>100</pool-size>\n")
+  dbconfig.write("<pool-min-size>20</pool-min-size>\n")
   dbconfig.write("<pool-remove-abandoned>true</pool-remove-abandoned>\n")
   dbconfig.write("<pool-remove-abandoned-timeout>300</pool-remove-abandoned-timeout>\n")
   dbconfig.write("<pool-test-while-idle>true</pool-test-while-idle>\n")
+  dbconfig.write("<pool-test-on-borrow>true</pool-test-on-borrow>\n")
   dbconfig.write("<min-evictable-idle-time-millis>60000</min-evictable-idle-time-millis>\n")
   dbconfig.write("<time-between-eviction-runs-millis>300000</time-between-eviction-runs-millis>\n")
+  dbconfig.write("<validation-query-timeout>3</validation-query-timeout>\n")
   dbconfig.write("</jdbc-datasource>\n</jira-database-config>\n")
 
   dbconfig.close()
@@ -61,4 +65,3 @@ if __name__ == "__main__":
   path = "/opt/atlassian/jira/conf/jira.config"
   dbconfig = "/var/atlassian/jira/dbconfig.xml"
   workConfig(path,dbconfig)
-
