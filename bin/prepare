@@ -35,11 +35,9 @@ do
 
 	# Edit the `Dockerfile` by changing the current version to the new obtained
 	# version from the Atlassian JIRA version feed.
-	# sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
-    echo "aaaa"
+	sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
 	NAME="${URL#https://www.atlassian.com/software/jira/downloads/binary/}"
-    echo "bbbb"
-	#sed --in-place "s/atlassian-jira-software-.*.tar.gz/${NAME}/g" Dockerfile
+	sed --in-place "s/atlassian-jira-software-.*.tar.gz/${NAME}/g" Dockerfile
 
 	echo "Ready for acceptance testing"
 
