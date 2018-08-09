@@ -31,7 +31,7 @@ if [ -f "/opt/atlassian/jira/conf/jira.config" ] && [ ! -f "/var/atlassian/jira/
 fi
 
 if [ -d "/ssl/root" ]; then
-  /sslinstall.sh
+  /ssl/sslinstall.sh
 fi
 
 # Start Jira as the correct user
