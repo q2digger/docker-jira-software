@@ -68,7 +68,9 @@ else
 	# the changes are published for the Docker Hub repository and everyone else.
 	echo "Pushing new branch '${VERSION}'"
 
-	git push "origin" "${VERSION}" || exit 255
+    git push --all || exit 255
+
+	# git push "origin" "${VERSION}" || exit 255
 
 	# Notify the new branch has been deployed.
 	echo "Deployed new version to new branch '${VERSION}'"

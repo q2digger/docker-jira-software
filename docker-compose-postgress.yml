@@ -13,19 +13,22 @@ services:
     networks:
       - proxy
   jiradb:
-    image: postgres:9.4
+    image: blacklabelops/postgres
     volumes:
       - _jiradb:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=atlassian
       - POSTGRES_DB=jira
       - POSTGRES_USER=atlassian
+      - POSTGRES_ENCODING=UNICODE
+      - POSTGRES_COLLATE=C
+      - POSTGRES_COLLATE_TYPE=C
     networks:
       - jira
   jira:
-    image: q2digger/jira:latest
+    image: q2digger/jira-software:latest
     ports: 
-      - 0.0.0.0:8080:8080
+      - 0.0.0.0:8081:8080
     volumes:
       - _jiradata:/var/atlassian/jira
       - _jiralogs:/opt/atlassian/jira/logs
