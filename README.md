@@ -21,7 +21,7 @@ all fields are mandatory!!
 
 Simple line to start: 
 
-    docker run -d -p 8080:8080 --rm --name jira q2digger/jira:latest
+    docker run -d -p 8080:8080 --rm --name jira q2digger/jira-software:latest
 
 Line to start with ENV VARIABLES: 
 
