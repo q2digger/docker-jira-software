@@ -1,0 +1,60 @@
+version: '3'
+
+# note. first start jira container may restarts some times - it will wait database container ready. 
+# please don't worry and check logs. 
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./certs/:/etc/nginx/certs:ro
+      - ./jira-nginx_mysql.conf:/etc/nginx/vhost.d/jira.local.net
+    networks:
+      - proxy
+  jiradb:
+    image: mysql/mysql-server:5.6
+    command: --character-set-server=utf8 --collation-server=utf8_bin
+    # you can use utf8mb4 only with mysql 5.7 
+    # https://confluence.atlassian.com/jirakb/emojis-and-special-characters-for-jira-with-mysql-952604493.html
+    volumes:
+      - jiradb:/var/lib/mysql
+    environment:
+      - MYSQL_PASSWORD=atlassian
+      - MYSQL_DATABASE=jira
+      - MYSQL_USER=atlassian
+    networks:
+      - jira
+  jira:
+    image: q2digger/jira-software:latest
+    restart: on-failure
+    ports: 
+      - 0.0.0.0:8080:8080
+    volumes:
+      - jiradata:/var/atlassian/jira
+      - jiralogs:/opt/atlassian/jira/logs
+      - ./jira.config:/opt/atlassian/jira/conf/jira.config
+      - ./certs/:/ssl/root
+    networks:
+      - jira
+      - proxy
+    environment:
+      JVM_MINIMUM_MEMORY: '2048m'
+      JVM_MAXIMUM_MEMORY: '4096m'
+      CATALINA_CONNECTOR_PROXYNAME: 'jira.local.net'
+      CATALINA_CONNECTOR_PROXYPORT: '443'
+      CATALINA_CONNECTOR_SCHEME: 'https'
+      VIRTUAL_HOST: 'jira.local.net'
+      VIRTUAL_PORT: '8080'
+
+volumes:
+  jiradb:
+  jiradata:
+  jiralogs:
+
+networks:
+  jira:
+  proxy:
