@@ -43,6 +43,8 @@ if [ "${UID}" -eq 0 ]; then
         chmod -R 700 "${JIRA_HOME}" &&
             chown -R "${RUN_USER}:${RUN_GROUP}" "${JIRA_HOME}"
     fi
+    # Wait 15 second to ensure database is started.
+    sleep 15
     # Now drop privileges
     exec su -s /bin/bash "${RUN_USER}" -c "$JIRA_INSTALL_DIR/bin/start-jira.sh $@"
 else
