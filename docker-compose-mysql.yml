@@ -1,7 +1,12 @@
 version: '3'
 
-# note. first start jira container may restarts some times - it will wait database container ready. 
-# please don't worry and check logs. 
+# Attention.
+# First time you should start database container. 
+# It will create database. Only after that - start jira and proxy. 
+# for example: 
+# > docker-compose up jiradb
+# wait fey seconds (check logs) and start as usual.
+# > docker-compose up -d
 
 services:
   proxy:
