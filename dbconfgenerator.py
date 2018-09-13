@@ -53,7 +53,7 @@ def workConfig(path,dbconfig):
   dbconfig.write("<pool-remove-abandoned>true</pool-remove-abandoned>\n")
   dbconfig.write("<pool-remove-abandoned-timeout>300</pool-remove-abandoned-timeout>\n")
   dbconfig.write("<pool-test-while-idle>true</pool-test-while-idle>\n")
-  dbconfig.write("<pool-test-on-borrow>true</pool-test-on-borrow>\n")
+  dbconfig.write("<pool-test-on-borrow>false</pool-test-on-borrow>\n")
   dbconfig.write("<min-evictable-idle-time-millis>60000</min-evictable-idle-time-millis>\n")
   dbconfig.write("<time-between-eviction-runs-millis>300000</time-between-eviction-runs-millis>\n")
   dbconfig.write("<validation-query-timeout>3</validation-query-timeout>\n")
