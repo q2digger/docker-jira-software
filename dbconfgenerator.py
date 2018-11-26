@@ -30,7 +30,7 @@ def workConfig(path,dbconfig):
 
   if dbtype == "mysql":
     dbconfig.write("<database-type>mysql</database-type>\n<jdbc-datasource>\n")
-    dbconfig.write("<url>jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbname + "?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB</url>\n")
+    dbconfig.write("<url>jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbname + "?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=default_storage_engine=InnoDB</url>\n")
     dbconfig.write("<driver-class>com.mysql.jdbc.Driver</driver-class>\n<validation-query>select 1</validation-query>\n<validation-query-timeout>3</validation-query-timeout>\n")
   elif dbtype == "postgresql":
     dbschema = config.get("database","schema")
