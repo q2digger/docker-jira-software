@@ -41,7 +41,7 @@ services:
     volumes:
       - jiradata:/var/atlassian/jira
       - jiralogs:/opt/atlassian/jira/logs
-      - ./jira.config:/opt/atlassian/jira/conf/jira.config
+      - ./jira.config_mysql:/opt/atlassian/jira/conf/jira.config
       - ./certs/:/ssl/root
     networks:
       - jira
