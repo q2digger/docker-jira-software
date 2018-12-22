@@ -1,4 +1,10 @@
-﻿## Atlassian Jira Software
+## Atlassian Jira Software
+
+### Simple line to start: 
+
+```
+    docker run -d -p 8080:8080 --rm --name jira q2digger/jira-software:latest
+```
 
 You can use **jira.config** to setup database config. 
 It need only first run of the container (dbconfig.xml not exist)
@@ -19,9 +25,6 @@ all fields are mandatory!!
   - database
   - schema (only for postgresql, usually "public")
 
-Simple line to start: 
-
-    docker run -d -p 8080:8080 --rm --name jira q2digger/jira-software:latest
 
 Line to start with ENV VARIABLES: 
 
