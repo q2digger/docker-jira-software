@@ -10,6 +10,7 @@ ENV RUN_GROUP   daemon
 # Important deirectories
 ENV JIRA_HOME           /var/atlassian/jira
 ENV JIRA_INSTALL_DIR    /opt/atlassian/jira
+ENV MYSQL_CONNECTOR 5.1.47
 
 # Expose HTTP
 EXPOSE 8080
@@ -35,7 +36,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL_DIR}/conf/Catalina" \
     && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.13.0.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar" \
+    && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_CONNECTOR}.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-${MYSQL_CONNECTOR}/mysql-connector-java-${MYSQL_CONNECTOR}-bin.jar" \
     && rm -f                   "${JIRA_INSTALL_DIR}/lib/postgresql-*" \
     && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.2.4.jar" -o "${JIRA_INSTALL_DIR}/lib/postgresql-42.2.4.jar" \
     && chmod -R 700            "${JIRA_INSTALL_DIR}/conf" \
@@ -58,3 +59,4 @@ RUN set -x \
     && sed -i -e 's/port="8080"/port="8080" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' ${JIRA_INSTALL_DIR}/conf/server.xml
 
 VOLUME ["/var/atlassian/jira", "/opt/atlassian/jira/logs"]
+
