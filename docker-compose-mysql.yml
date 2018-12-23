@@ -34,7 +34,7 @@ services:
     networks:
       - jira
   jira:
-    image: q2digger/jira-software:latest
+    build: .
     restart: on-failure
     ports: 
       - 0.0.0.0:8080:8080

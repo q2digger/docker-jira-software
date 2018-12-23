@@ -10,7 +10,7 @@ ENV RUN_GROUP   daemon
 # Important deirectories
 ENV JIRA_HOME           /var/atlassian/jira
 ENV JIRA_INSTALL_DIR    /opt/atlassian/jira
-ENV MYSQL_CONNECTOR 5.1.47
+ENV MYSQL_CONNECTOR 5.1.43
 
 # Expose HTTP
 EXPOSE 8080
