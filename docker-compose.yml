@@ -16,6 +16,10 @@ services:
     image: blacklabelops/postgres
     volumes:
       - _jiradb:/var/lib/postgresql/data
+    # ./init-db-data.sql:/docker-entrypoint-initdb.d/initdb.sql
+    # load init data during deploy db container
+    # https://hub.docker.com/_/postgres 
+    # chapter "How to extend this image"
     environment:
       - POSTGRES_PASSWORD=atlassian
       - POSTGRES_DB=jira
