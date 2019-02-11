@@ -6,9 +6,12 @@
     docker run -d -p 8080:8080 --rm --name jira q2digger/jira-software:latest
 ```
 
-Line to start with ENV VARIABLES: 
+Line to start with ENVIRONMENT VARIABLES and VOLUME for save persistent data:
 ```
+    docker volume create jira
+
     docker run -d -p 8080:8080 --rm --name jira \
+      -v jira:/var/atlassian/jira \
       -e JVM_MINIMUM_MEMORY=2048m \
       -e JVM_MAXIMUM_MEMORY=4096m \
       -e CATALINA_CONNECTOR_PROXYNAME='jira.local.net' \
@@ -16,6 +19,11 @@ Line to start with ENV VARIABLES:
       -e CATALINA_CONNECTOR_SCHEME='https' \
       q2digger/jira-software:latest
 ```
+Where: 
+  - CATALINA_CONNECTOR_PROXYNAME - name of reverse proxy server
+  - CATALINA_CONNECTOR_PROXYPORT - port of reverse proxy server
+  - CATALINA_CONNECTOR_SCHEME - scheme of reverse proxy server (http or https)
+
 or you can use docker-compose.yml (example below)
 
 ### Setup database during first run of the container
