@@ -1,0 +1,8 @@
+[database]
+user = atlassian
+password = atlassian
+host = jiradb
+port = 3306
+name = jira
+type = mysql
+schema = public
