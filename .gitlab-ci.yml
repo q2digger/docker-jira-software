@@ -9,22 +9,30 @@ variables:
 before_script:
    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
 
-build-master:
+#build-master:
+#  stage: build
+#  script:
+#    - docker pull $CONTAINER_IMAGE:latest || true
+#    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:latest .
+#    - docker push $CONTAINER_IMAGE:latest
+#  only:
+#    - master
+
+#build:
+#  stage: build
+#  script:
+#    - docker pull $CONTAINER_IMAGE:latest || true
+#    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:$CI_COMMIT_REF_NAME --tag $CONTAINER_IMAGE:latest .
+#    - docker push $CONTAINER_IMAGE:$CI_COMMIT_REF_NAME
+#    - docker push $CONTAINER_IMAGE:latest
+#  except:
+#    - master
+
+build-tag:
   stage: build
   script:
     - docker pull $CONTAINER_IMAGE:latest || true
     - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:latest .
     - docker push $CONTAINER_IMAGE:latest
   only:
-    - master
-
-build:
-  stage: build
-  script:
-    - docker pull $CONTAINER_IMAGE:latest || true
-    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:$CI_COMMIT_REF_NAME --tag $CONTAINER_IMAGE:latest .
-    - docker push $CONTAINER_IMAGE:$CI_COMMIT_REF_NAME
-    - docker push $CONTAINER_IMAGE:latest
-  except:
-    - master
-
+    - tags
