@@ -33,7 +33,7 @@ It need only first run of the container (dbconfig.xml not exist)
 
 Options for file ```jira.config```
 
-database type:
+supported database type:
   - mysql
   - postgresql
   - mssql
