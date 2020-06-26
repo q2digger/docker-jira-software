@@ -1,8 +1,8 @@
-FROM anapsix/alpine-java:8_server-jre
+FROM alpine:3.8
 
 MAINTAINER Dmitry Gerasimov <q2digger@gmail.com>
 
-ENV JIRA_VERSION 8.4.1
+ENV JIRA_VERSION 8.10.0
 
 ENV RUN_USER    daemon
 ENV RUN_GROUP   daemon
@@ -28,16 +28,19 @@ RUN apk update -qq \
     && update-ca-certificates 2>/dev/null || true \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
+# Jira is tested and bundled with the 42.2.6 JDBC driver. You can also use the latest JDBC driver for your PostgreSQL version, 
+# though we can't guarantee it will work with your version of Jira. To use a different JDBC driver:
+
 RUN set -x \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
     && chmod -R 700            "${JIRA_HOME}" \
     && chown -R daemon:daemon  "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL_DIR}/conf/Catalina" \
-    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.4.1.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar" \
+    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.10.0.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.48.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.48/mysql-connector-java-5.1.48-bin.jar" \
     && rm -f                   "${JIRA_INSTALL_DIR}/lib/postgresql-*" \
-    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.2.4.jar" -o "${JIRA_INSTALL_DIR}/lib/postgresql-42.2.4.jar" \
+    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.2.11.jar" -o "${JIRA_INSTALL_DIR}/lib/postgresql-42.2.11.jar" \
     && chmod -R 700            "${JIRA_INSTALL_DIR}/conf" \
     && chmod -R 700            "${JIRA_INSTALL_DIR}/logs" \
     && chmod -R 700            "${JIRA_INSTALL_DIR}/temp" \

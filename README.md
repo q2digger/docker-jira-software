@@ -3,14 +3,14 @@
 ### Simple line to start: 
 
 ```
-    docker run -d -p 8080:8080 --rm --name jira q2digger/jira-software:latest
+    docker run -d -p 8080:8080 --name jira q2digger/jira-software:latest
 ```
 
 Line to start with ENVIRONMENT VARIABLES and VOLUME for save persistent data:
 ```
     docker volume create jira
 
-    docker run -d -p 8080:8080 --rm --name jira \
+    docker run -d -p 8080:8080 --name jira \
       -v jira:/var/atlassian/jira \
       -e JVM_MINIMUM_MEMORY=2048m \
       -e JVM_MAXIMUM_MEMORY=4096m \
