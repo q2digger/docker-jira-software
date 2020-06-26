@@ -24,7 +24,7 @@ COPY entrypoint.sh  /entrypoint.sh
 COPY dbconfgenerator.py /dbconfgenerator.py
 
 RUN apk update -qq \
-    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini python2 \
+    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini python2 openjdk8-jre \
     && update-ca-certificates 2>/dev/null || true \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
