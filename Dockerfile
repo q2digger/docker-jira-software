@@ -2,7 +2,7 @@ FROM alpine:3.8
 
 MAINTAINER Dmitry Gerasimov <q2digger@gmail.com>
 
-ENV JIRA_VERSION 8.11.1
+ENV JIRA_VERSION 8.12.0
 
 ENV RUN_USER    daemon
 ENV RUN_GROUP   daemon
@@ -37,7 +37,7 @@ RUN set -x \
     && chmod -R 700            "${JIRA_HOME}" \
     && chown -R daemon:daemon  "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL_DIR}/conf/Catalina" \
-    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.11.1.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.12.0.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}" --strip-components=1 --no-same-owner \
     && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.48.tar.gz" | tar -xz --directory "${JIRA_INSTALL_DIR}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.48/mysql-connector-java-5.1.48-bin.jar" \
     && rm -f                   "${JIRA_INSTALL_DIR}/lib/postgresql-*" \
     && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.2.11.jar" -o "${JIRA_INSTALL_DIR}/lib/postgresql-42.2.11.jar" \
